@@ -9,7 +9,7 @@ Features:
 
 !date            : Prints the current date and time
 
-!greet <person>  : Greets person
+!greet username  : Greets username
 
 !quit            : Terminates the program in a proper manner
 
