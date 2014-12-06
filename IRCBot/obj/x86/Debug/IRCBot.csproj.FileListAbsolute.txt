@@ -1,0 +1,5 @@
+C:\Users\Aaro\Documents\Visual Studio 2010\Projects\C#\Projektit\IRCBot\IRC-Bot\IRCBot\bin\Debug\IRCBot.exe
+C:\Users\Aaro\Documents\Visual Studio 2010\Projects\C#\Projektit\IRCBot\IRC-Bot\IRCBot\bin\Debug\IRCBot.pdb
+C:\Users\Aaro\Documents\Visual Studio 2010\Projects\C#\Projektit\IRCBot\IRC-Bot\IRCBot\obj\x86\Debug\IRCBot.csprojResolveAssemblyReference.cache
+C:\Users\Aaro\Documents\Visual Studio 2010\Projects\C#\Projektit\IRCBot\IRC-Bot\IRCBot\obj\x86\Debug\IRCBot.exe
+C:\Users\Aaro\Documents\Visual Studio 2010\Projects\C#\Projektit\IRCBot\IRC-Bot\IRCBot\obj\x86\Debug\IRCBot.pdb
