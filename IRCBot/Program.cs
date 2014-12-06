@@ -14,7 +14,7 @@ namespace IRCBot
             Bot ircbot = new Bot("chat.freenode.net", 6667);
             ircbot.connectToChannel("#elgisbottest", "superPotti");
 
-            //discard first four messages send by the server
+            //discard first three messages send by the server
             for (int i = 0; i < 3; i++) { ircbot.readMessage(); }
 
             //save chatlog in the same folder with .sln file
