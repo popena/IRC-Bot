@@ -1,0 +1,5 @@
+[13:43]<elgis>hello
+[13:43]<elgis>testing
+[13:43]<elgis>!date
+[13:43]<elgis>//github.com/elgis/IRC-Bot
+[13:43]<elgis>!quit

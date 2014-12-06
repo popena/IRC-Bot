@@ -14,6 +14,10 @@ namespace IRCBot
             Bot ircbot = new Bot("chat.freenode.net", 6667);
             ircbot.connectToChannel("#elgisbottest", "superPotti");
 
+            //discard first three messages send by the server
+            for (int i = 0; i < 3; i++) { ircbot.readMessage(); }
+
+            //save chatlog in the same folder with .sln file
             StreamWriter sr = new StreamWriter(@"../../../chatlog.txt");
             string message = "";
 
@@ -29,10 +33,11 @@ namespace IRCBot
 
                 sr.WriteLine(formatMsg(message, 0));
 
-                if (formatMsg(message, 1) == "!quit")
+                message = formatMsg(message, 1);
+                if (message == "!quit")
                     break;
                 else
-                    ircbot.Functions(formatMsg(message, 1));
+                    ircbot.Functions(message);
             }
             sr.Close();
             ircbot.closeConnection();
@@ -47,7 +52,7 @@ namespace IRCBot
             {
                 var date = DateTime.Now;
                 formatted = "[" + date.Hour + ":" + date.Minute + "]<";
-                formatted += words[1] + "> ";//username,
+                formatted += message.Split(new char[] {':', '!'})[1] + "> ";
                 formatted += words[words.Length - 1];
             }
             else
