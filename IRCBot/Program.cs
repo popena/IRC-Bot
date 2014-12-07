@@ -16,8 +16,6 @@ namespace IRCBot
 
             Bot ircbot = new Bot(botInfo[0], Int32.Parse(botInfo[1]));
             ircbot.connectToChannel(botInfo[2], botInfo[3]);
-            //Bot ircbot = new Bot("chat.freenode.net", 6667);
-            //ircbot.connectToChannel("#elgisbottest", "superPotti");
 
             //discard first three messages send by the server
             for (int i = 0; i < 3; i++) { ircbot.readMessage(); }
