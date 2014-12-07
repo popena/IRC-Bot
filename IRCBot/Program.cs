@@ -11,8 +11,13 @@ namespace IRCBot
     {
         static void Main(string[] args)
         {
-            Bot ircbot = new Bot("chat.freenode.net", 6667);
-            ircbot.connectToChannel("#elgisbottest", "superPotti");
+            string[] botInfo = new string[4];
+            botInfo = getInfo();
+
+            Bot ircbot = new Bot(botInfo[0], Int32.Parse(botInfo[1]));
+            ircbot.connectToChannel(botInfo[2], botInfo[3]);
+            //Bot ircbot = new Bot("chat.freenode.net", 6667);
+            //ircbot.connectToChannel("#elgisbottest", "superPotti");
 
             //discard first four messages send by the server
             for (int i = 0; i < 3; i++) { ircbot.readMessage(); }
@@ -59,6 +64,30 @@ namespace IRCBot
                 formatted = words[words.Length - 1];
             }
             return formatted;
+        }
+
+        private static string[] getInfo()
+        {
+            string[] info = new string[4];
+            string userValue = "";
+
+            Console.Write("Server (default: chat.freenode.net): ");
+            userValue = Console.ReadLine();
+            info[0] = (userValue != "") ? userValue : "chat.freenode.net";
+
+            Console.Write("Port (default: 6667): ");
+            userValue = Console.ReadLine();
+            info[1] = (userValue != "") ? userValue : "6667";
+            
+            Console.Write("Channel (default: #irc): ");
+            userValue = Console.ReadLine();
+            info[2] = (userValue != "") ? userValue : "#irc";
+
+            Console.Write("Bot's nickname (default: irc_bot): ");
+            userValue = Console.ReadLine();
+            info[3] = (userValue != "") ? userValue : "irc_bot";
+
+            return info;
         }
     }
 }
