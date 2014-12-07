@@ -50,8 +50,7 @@ namespace IRCBot
 
             if (flag == 0)
             {
-                var date = DateTime.Now;
-                formatted = "[" + date.Hour + ":" + date.Minute + "]<";
+                formatted +=  "[" + DateTime.Now.ToString("HH:mm") + "]<";//24 hour clock
                 formatted += message.Split(new char[] {':', '!'})[1] + "> ";
                 formatted += words[words.Length - 1];
             }
