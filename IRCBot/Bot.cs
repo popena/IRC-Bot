@@ -46,9 +46,9 @@ namespace IRCBot
         public void connectToChannel(string channel, string nick)
         {
             this.channel = channel;
-            Console.WriteLine("Connecting, this may take a while...");
+            Console.WriteLine("\nConnecting, this may take a while...");
 
-            writer.WriteLine("USER irctestbotti completely real :testibotti");
+            writer.WriteLine("USER ircbot irc bot :irc_bot");
             writer.WriteLine("NICK " + nick);
 
             Console.WriteLine("Waiting for ping request...");
@@ -68,7 +68,6 @@ namespace IRCBot
             writer.WriteLine("JOIN " + channel);
 
             Console.WriteLine("Successfully connected!");
-            sendMessage("Elgis, my overlord, I'm answering to your summons");
         }
 
         public void sendPONG(string msg)
