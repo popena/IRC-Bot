@@ -16,13 +16,22 @@ namespace IRCBot
         private StreamReader reader;
         private StreamWriter writer;
         private string channel = "";
+        private string nick = "";
 
         public Bot(string server, int port)
         {
-            irc = new TcpClient(server, port);
-            data = irc.GetStream();
-            reader = new StreamReader(data);
-            writer = new StreamWriter(data) { NewLine = "\r\n", AutoFlush = true };
+            try
+            {
+                irc = new TcpClient(server, port);
+                data = irc.GetStream();
+                reader = new StreamReader(data);
+                writer = new StreamWriter(data) { NewLine = "\r\n", AutoFlush = true };
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
 
         public void closeConnection()
@@ -41,11 +50,15 @@ namespace IRCBot
         public void sendMessage(string message)
         {
             writer.WriteLine("PRIVMSG " + channel + " :" + message);
+            message = "[" + DateTime.Now.ToString("HH:mm") + "]<" + nick + "> " + message;
+
+            Program.sr.WriteLine(message);
         }
 
         public void connectToChannel(string channel, string nick)
         {
             this.channel = channel;
+            this.nick = nick;
             Console.WriteLine("\nConnecting, this may take a while...");
 
             writer.WriteLine("USER ircbot irc bot :irc_bot");
