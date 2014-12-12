@@ -9,6 +9,8 @@ namespace IRCBot
 {
     class Program
     {
+        public static StreamWriter sr;
+
         static void Main(string[] args)
         {
             string[] botInfo = new string[4];
@@ -21,7 +23,7 @@ namespace IRCBot
             for (int i = 0; i < 3; i++) { ircbot.readMessage(); }
 
             //save chatlog in the same folder with .sln file
-            StreamWriter sr = new StreamWriter(@"../../../chatlog.txt");
+            sr = new StreamWriter(@"../../../chatlog.txt");
             string message = "";
 
             while (true)
@@ -34,6 +36,7 @@ namespace IRCBot
                     Console.WriteLine(message);
                 }
 
+                Console.WriteLine(message);
                 sr.WriteLine(formatMsg(message, 0));
 
                 message = formatMsg(message, 1);
@@ -46,7 +49,7 @@ namespace IRCBot
             ircbot.closeConnection();
         }
 
-        private static string formatMsg(string message, int flag)
+        public static string formatMsg(string message, int flag)
         {
             string formatted = "";
             string[] words = message.Split(':');
