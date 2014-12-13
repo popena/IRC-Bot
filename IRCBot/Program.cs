@@ -31,10 +31,7 @@ namespace IRCBot
                 message = ircbot.readMessage();
 
                 if (message.StartsWith("PING"))
-                {
                     ircbot.sendPONG(message);
-                    Console.WriteLine(message);
-                }
 
                 Console.WriteLine(message);
                 sr.WriteLine(formatMsg(message, 0));
@@ -57,13 +54,12 @@ namespace IRCBot
             if (flag == 0)
             {
                 formatted +=  "[" + DateTime.Now.ToString("HH:mm") + "]<";//24 hour clock
-                formatted += message.Split(new char[] {':', '!'})[1] + "> ";
+                formatted += message.Split(new char[] {':', '!'})[1] + "> ";//<usrname>
                 formatted += words[words.Length - 1];
             }
             else
-            {
                 formatted = words[words.Length - 1];
-            }
+
             return formatted;
         }
 
