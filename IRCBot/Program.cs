@@ -31,12 +31,8 @@ namespace IRCBot
                 message = ircbot.readMessage();
 
                 if (message.StartsWith("PING"))
-                {
                     ircbot.sendPONG(message);
-                    Console.WriteLine(message);
-                }
 
-                Console.WriteLine(message);
                 sr.WriteLine(formatMsg(message, 0));
 
                 message = formatMsg(message, 1);
@@ -49,7 +45,7 @@ namespace IRCBot
             ircbot.closeConnection();
         }
 
-        public static string formatMsg(string message, int flag)
+        private static string formatMsg(string message, int flag)
         {
             string formatted = "";
             string[] words = message.Split(':');
