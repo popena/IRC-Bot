@@ -29,7 +29,9 @@ namespace IRCBot
 
             }
             catch (Exception e)
+            {
                 Console.WriteLine(e.ToString());
+            }
         }
 
         public void closeConnection()
