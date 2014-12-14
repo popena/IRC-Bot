@@ -49,7 +49,6 @@ namespace IRCBot
         {
             writer.WriteLine("PRIVMSG " + channel + " :" + message);
             message = "[" + DateTime.Now.ToString("HH:mm") + "]<" + nick + "> " + message;
-
             Program.sr.WriteLine(message);
         }
 
@@ -131,6 +130,8 @@ namespace IRCBot
                 }
                 sendMessage(titleContent);
             }
+            else if (msg == msg.ToUpper())
+                sendMessage("Warning! Stop typing in caps!");
         }
     }//class
 }//namespace
