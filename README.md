@@ -1,10 +1,10 @@
 IRC-Bot
 =======
 
-This programs is written in C# and was made solely for learning purposes.
+This program is written in C# and was made solely for learning purposes.
 
 
-Features:
+Functions:
 =======
 
 !date            : Prints the current date and time
@@ -13,6 +13,12 @@ Features:
 
 !quit            : Terminates the program in a proper manner
 
-Program also fetches the title of given website.
+Features:
+=======
+
+Fetches the titles of given website
+
+Warns user if the message he/she sent was written in caps lock
+
 
 More features will be added later
