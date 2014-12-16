@@ -16,7 +16,7 @@ Functions:
 Features:
 =======
 
-Fetches the titles of given website
+Fetches the title of given website
 
 Warns user if the message he/she sent was written in caps lock
 
