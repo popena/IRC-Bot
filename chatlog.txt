@@ -1,5 +1,14 @@
-[13:43]<elgis>hello
-[13:43]<elgis>testing
-[13:43]<elgis>!date
-[13:43]<elgis>//github.com/elgis/IRC-Bot
-[13:43]<elgis>!quit
+[19:09]<elgis> how are you today
+[19:09]<elgis> just fine?
+[19:09]<elgis> great
+[19:09]<elgis> !date
+[19:09]<KiSsUPoTtI> 12.12.2014 19:09:23
+[19:09]<elgis> //naamapalmu.com/file/51077
+[19:09]<KiSsUPoTtI> [URL] Mii avatar nigga | Naamapalmu
+[19:09]<elgis> JOSKUS TUNTUU että kissatkoiria
+[19:09]<elgis> JOSKUS TUNTUU ETTÄ KISSATKOIRIA
+[19:09]<KiSsUPoTtI> Warning! Stop typing in caps!
+[19:12]<hitchcock.freenode.net> hitchcock.freenode.net
+[19:12]<KiSsUPoTtI> 
+[19:12]<hitchcock.freenode.net 412 KiSsUPoTtI > No text to send
+[19:12]<elgis> !quit
