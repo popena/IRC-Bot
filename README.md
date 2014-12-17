@@ -13,11 +13,6 @@ Functions:
 | !greet user | Prints "Hello user"     |
 | !quit       | Terminates the program  |
 
-!date            : Prints the current date and time
-
-!greet username  : Greets username
-
-!quit            : Terminates the program in a proper manner
 
 Features:
 =======
