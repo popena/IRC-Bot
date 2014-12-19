@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Net;
+using System.Threading;
 
 namespace IRCBot
 {
@@ -24,9 +25,12 @@ namespace IRCBot
             {
                 irc = new TcpClient(server, port);
                 data = irc.GetStream();
+				if(data==null){
+					Console.WriteLine("Invalid server.");
+					Console.ReadLine();
+				}
                 reader = new StreamReader(data);
                 writer = new StreamWriter(data) { NewLine = "\r\n", AutoFlush = true };
-
             }
             catch (Exception e)
             {
@@ -49,9 +53,12 @@ namespace IRCBot
 
         public void sendMessage(string message)
         {
+			//Console.WriteLine ("PRIVMSG " + channel + " :" + message);
+
             writer.WriteLine("PRIVMSG " + channel + " :" + message);
             message = "[" + DateTime.Now.ToString("HH:mm") + "]<" + nick + "> " + message;
             Program.sr.WriteLine(message);
+            
         }
 
         public void connectToChannel(string channel, string nick)
@@ -62,22 +69,26 @@ namespace IRCBot
 
             writer.WriteLine("USER ircbot irc bot :irc_bot");
             writer.WriteLine("NICK " + nick);
-
+			/*
             Console.WriteLine("Waiting for ping request...");
+
+
 
             string message = "";
             while (true)
             {
                 message = reader.ReadLine();
-                if (message.StartsWith("PING"))
-                {
-                    sendPONG(message);
-                    Console.WriteLine("Pong sent!");
-                    break;
-                }
+				if (message != null) {
+					if (message.StartsWith ("PING")) {
+						sendPONG (message);
+						Console.WriteLine ("Pong sent!");
+						break;
+					}
+				}
             }
-
+*/
             writer.WriteLine("JOIN " + channel);
+
 
             Console.WriteLine("Successfully connected!");
         }
@@ -90,8 +101,10 @@ namespace IRCBot
 
         public void Functions(string msg)
         {
-            if (msg.StartsWith("!greet"))
-                sendMessage("Hello " + msg.Split(' ')[1]);
+			if (msg.StartsWith ("!greet")) {
+
+				sendMessage ("Hello " + msg.Split (' ') [1]);
+			}
             else if (msg == "!date")
                 sendMessage(DateTime.Now.ToString());
             else
@@ -100,6 +113,7 @@ namespace IRCBot
 
         private void Analyze(string msg)
         {
+
             string linkPattern = @"((http(s)?://)?(www.)?(.*)?.+\.(.){1,})(.+)?";
 
             if (Regex.IsMatch(msg, linkPattern, RegexOptions.Singleline))
