@@ -5,7 +5,6 @@ using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
 
-
 namespace IRCBot
 {
     class Program
@@ -26,8 +25,6 @@ namespace IRCBot
             //save chatlog in the same folder with .sln file
             sr = new StreamWriter(@"../../../chatlog.txt");
 			string message = "";
-			//string sender = "";
-
 			string[] messageInfo;
             while (true)
             {
@@ -38,14 +35,11 @@ namespace IRCBot
 
 				messageInfo = getMessageInfo (message);
 				if (messageInfo [0] != null) {
-
 					sr.WriteLine (messageInfo [0]+": "+messageInfo [1], 0);
-
-
 					if (message == "!quit")
 						break;
 					else
-						ircbot.Functions (messageInfo [1]);
+						ircbot.Functions (messageInfo [1],messageInfo[0]);
 				}
             }
             sr.Close();
@@ -54,7 +48,6 @@ namespace IRCBot
 
         private static string formatMsg(string message, int flag)
         {
-
             string formatted = "";
             string[] words = message.Split(':');
 
@@ -71,7 +64,7 @@ namespace IRCBot
         }
 
 		private static string[] getMessageInfo(string message){
-			const string pattern = @":(.+?)!~(.+?)PRIVMSG(.+?):(.+)";
+			const string pattern = @":(.+?)!(.+?)PRIVMSG(.+?):(.+)";
 			Match match = Regex.Match (message, pattern);
 			string []retVal = new string[2];
 			if (match.Groups.Count == 5) {

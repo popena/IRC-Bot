@@ -6,7 +6,6 @@ using System.Net.Sockets;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Net;
-using System.Threading;
 
 namespace IRCBot
 {
@@ -18,6 +17,10 @@ namespace IRCBot
         private StreamWriter writer;
         private string channel = "";
         private string nick = "";
+		#region Voting variables
+		List<string> voters = new List<string> ();
+		List<voteChoice> voteChoices = new List<voteChoice> ();
+		#endregion
 
         public Bot(string server, int port)
         {
@@ -53,12 +56,9 @@ namespace IRCBot
 
         public void sendMessage(string message)
         {
-			//Console.WriteLine ("PRIVMSG " + channel + " :" + message);
-
             writer.WriteLine("PRIVMSG " + channel + " :" + message);
             message = "[" + DateTime.Now.ToString("HH:mm") + "]<" + nick + "> " + message;
             Program.sr.WriteLine(message);
-            
         }
 
         public void connectToChannel(string channel, string nick)
@@ -69,24 +69,6 @@ namespace IRCBot
 
             writer.WriteLine("USER ircbot irc bot :irc_bot");
             writer.WriteLine("NICK " + nick);
-			/*
-            Console.WriteLine("Waiting for ping request...");
-
-
-
-            string message = "";
-            while (true)
-            {
-                message = reader.ReadLine();
-				if (message != null) {
-					if (message.StartsWith ("PING")) {
-						sendPONG (message);
-						Console.WriteLine ("Pong sent!");
-						break;
-					}
-				}
-            }
-*/
             writer.WriteLine("JOIN " + channel);
 
 
@@ -99,21 +81,70 @@ namespace IRCBot
             writer.WriteLine("PONG " + msg);
         }
 
-        public void Functions(string msg)
+		public void Functions(string msg,string sender)
         {
-			if (msg.StartsWith ("!greet")) {
-
+			if (msg.StartsWith ("!greet"))
 				sendMessage ("Hello " + msg.Split (' ') [1]);
+			else if (msg == "!date")
+				sendMessage (DateTime.Now.ToString ());
+			else if (msg.StartsWith ("!startvote ") && voteChoices.Count == 0) {
+				string message = "";
+				string[] voteInput = msg.Split (' ');
+				if (voteInput.Length >= 3) {
+					for (int i = 1; i < voteInput.Length; i++) {
+						voteChoices.Add (new voteChoice (voteInput [i], 0));
+						message += i + ". " + voteInput [i] + " ";
+					}
+				}
+
+				sendMessage (message);
+
+			} else if (msg.StartsWith ("!vote ") && voteChoices.Count > 0) {
+				string[] voteInput = msg.Split (' ');
+				if (voteInput.Length >= 2) {
+					if (!voters.Contains (sender)) {
+						try {
+							int vote = Int32.Parse (voteInput [1]);
+							Console.WriteLine (vote + " , " + voteChoices.Count);
+							if (vote <= voteChoices.Count && vote > 0) {
+								voteChoices [vote - 1].votes++;
+								voters.Add (sender);
+							}
+						} catch (FormatException e) {
+							Console.WriteLine ("Vote is in wrong format.");
+						} catch (OverflowException e) {
+							Console.WriteLine ("Vote is in wrong format.");
+						}
+					}
+				}
+			} else if (msg == "!stopvote" && voteChoices.Count > 0) {
+				printVotes ();
+				clearVotes ();
+			} else if (msg == "!votestatus") {
+				printVotes ();
 			}
-            else if (msg == "!date")
-                sendMessage(DateTime.Now.ToString());
             else
                 Analyze(msg);
         }
 
+		private void printVotes(){
+			string message = "Results: ";
+			int totalVotes = 0;
+			for (int i = 0; i < voteChoices.Count; i++) {
+				totalVotes += voteChoices [i].votes;
+			}
+			for (int i = 0; i < voteChoices.Count; i++) {
+				message+=(i+1)+". "+voteChoices[i].voteName+" "+(voteChoices [i].votes/totalVotes)*100+"% ";
+			}
+			sendMessage (message);
+		}
+		private void clearVotes(){
+			voteChoices.Clear ();
+			voters.Clear ();
+		}
+
         private void Analyze(string msg)
         {
-
             string linkPattern = @"((http(s)?://)?(www.)?(.*)?.+\.(.){1,})(.+)?";
 
             if (Regex.IsMatch(msg, linkPattern, RegexOptions.Singleline))
@@ -150,4 +181,15 @@ namespace IRCBot
                 sendMessage("Warning! Stop typing in caps!");
         }
     }//class
+
+	class voteChoice{
+		public string voteName{ get; set;}
+		public int votes{ get; set;}
+
+		public voteChoice(string voteName,int votes){
+			this.votes = votes;
+			this.voteName = voteName;
+		}
+	}
+
 }//namespace
